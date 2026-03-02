@@ -1,85 +1,111 @@
-import { Car, CheckCircle2, Phone, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { formatPhone } from "@/utils/formatPhone";
+import { CheckCircle2, Edit, Mail, Phone, Pin, User } from "lucide-react";
+import { useState } from "react";
 import { statusConfig } from "../../statusConfig";
-import type { IProcesso } from "../../types";
+import type { IProcess } from "../../types";
+import { DeleteProcessModal } from "../DeleteProcessModal";
+import { ModalUpdateProcess } from "../UpdateProcessModal";
 
 interface Props {
-  proc: IProcesso;
+  proc: IProcess;
 }
+interface Document {
+  name: string;
+  value?: string;
+}
+export type ProcessStatus =
+  | "NOVO"
+  | "EM_ANDAMENTO"
+  | "AGUARDANDO_CLIENTE"
+  | "PROTOCOLADO"
+  | "FINALIZADO"
+  | "CANCELADO";
+
+type IUpdateProcess = {
+  id: string;
+  client: {
+    id: string;
+    name: string;
+    cpfCnpj: string;
+    tel: string;
+    address: string;
+    email: string;
+  };
+  serviceType: string;
+  openDate: Date;
+  deadline: Date;
+  status: ProcessStatus;
+  responsibleName: string;
+  serviceValue: number;
+  internalNote?: string;
+  documents: Document[];
+};
 
 export function ProcessExpanded({ proc }: Props) {
-  const cfg = statusConfig[proc.status];
-
-  const docsRecebidos = proc.documentos.filter((d) => d.recebido).length;
-
+  const [selectedProcess, setSelectedProcess] =
+    useState<IUpdateProcess | null>();
   const isUrgent =
-    proc.status === "atrasado" ||
-    (proc.diasRestantes <= 3 && proc.status !== "concluido");
-
+    proc.status === "AGUARDANDO_CLIENTE" ||
+    (proc.deadline <= new Date() && proc.status !== "FINALIZADO");
+  const cfg = statusConfig[proc.status];
   return (
     <div
-      className="px-4 pb-4 space-y-4"
-      style={{ borderTop: "1px solid hsl(215 20% 15%)" }}
+      className="px-2 space-y-4 border-l rounded-b-md border-b border-r"
+      style={{ borderColor: cfg.color }}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4  p-0 w-full ">
         {/* Cliente */}
         <div className="space-y-2">
-          <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <h4 className="text-xs font-medium uppercase tracking-wide text-accent-foreground">
             Cliente
           </h4>
 
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-sm text-white">
+            <div className="flex items-center gap-2 text-sm text-accent-foreground">
               <User className="w-3.5 h-3.5 text-muted-foreground" />
-              {proc.cliente}
+              {proc.client.name}
             </div>
 
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Phone className="w-3.5 h-3.5" />
-              {proc.telefone}
+              {formatPhone(proc.client.tel)}
             </div>
-
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Car className="w-3.5 h-3.5" />
-              {proc.veiculo}
-              {proc.placa !== "Pendente" &&
-                proc.placa !== "Pendentes" &&
-                proc.placa !== "Diversos" && <span>· {proc.placa}</span>}
+              <Mail className="w-3.5 h-3.5" />
+              {proc.client.email}
+            </div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Pin className="w-3.5 h-3.5" />
+              {proc.client.address}
             </div>
           </div>
         </div>
 
         {/* Documentos */}
         <div className="space-y-2">
-          <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Documentos ({docsRecebidos}/{proc.documentos.length})
+          <h4 className="text-xs font-medium uppercase tracking-wide text-accent-foreground">
+            Documentos
           </h4>
 
           <div className="space-y-1.5">
-            {proc.documentos.map((doc, i) => (
+            {proc.documents.map((doc, i) => (
               <div key={i} className="flex items-center gap-2 text-sm">
                 <CheckCircle2
                   className="w-3.5 h-3.5 flex-shrink-0"
                   style={{
-                    color: doc.recebido
-                      ? "hsl(160 84% 39%)"
-                      : "hsl(215 20% 30%)",
+                    color: "hsl(160 84% 39%)",
                   }}
                 />
                 <span
                   className={
-                    doc.recebido
+                    doc.name
                       ? "text-muted-foreground"
                       : "text-muted-foreground/70"
                   }
                 >
-                  {doc.nome}
+                  {doc.name}
                 </span>
-
-                {!doc.recebido && (
-                  <span className="text-xs px-1.5 py-0.5 rounded bg-yellow-500/10 text-yellow-500">
-                    Pendente
-                  </span>
-                )}
               </div>
             ))}
           </div>
@@ -87,60 +113,71 @@ export function ProcessExpanded({ proc }: Props) {
 
         {/* Detalhes */}
         <div className="space-y-2">
-          <h4 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Detalhes
-          </h4>
+          <div className="flex justify-between items-center">
+            <h4 className="text-xs font-medium uppercase tracking-wide text-accent-foreground">
+              Detalhes
+            </h4>
+
+            <div className="flex gap-3">
+              {selectedProcess && (
+                <ModalUpdateProcess
+                  open={selectedProcess.id === proc.id}
+                  process={proc}
+                  onClose={() => setSelectedProcess(null)}
+                />
+              )}
+
+              <Button
+                onClick={() => setSelectedProcess(proc)}
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-primary hover:bg-gray-3"
+              >
+                <Edit />
+              </Button>
+
+              <DeleteProcessModal id={proc.id} />
+            </div>
+          </div>
 
           <div className="space-y-2 text-sm text-muted-foreground">
             <div className="flex justify-between">
               <span>Entrada:</span>
-              <span className="text-white">{proc.dataEntrada}</span>
+              <span className="text-accent-foreground">
+                {new Date(proc.openDate).toLocaleDateString("pt-BR")}
+              </span>
             </div>
 
             <div className="flex justify-between">
               <span>Prazo:</span>
               <span
-                className={isUrgent ? "text-red-400 font-medium" : "text-white"}
+                className={
+                  isUrgent
+                    ? "text-red-400 font-medium"
+                    : "text-accent-foreground"
+                }
               >
-                {proc.prazoFinal}
+                {new Date(proc.deadline).toLocaleDateString("pt-BR")}
               </span>
             </div>
 
             <div className="flex justify-between">
               <span>Responsável:</span>
-              <span className="text-white">{proc.responsavel}</span>
+              <span className="text-accent-foreground">
+                {proc.responsibleName}
+              </span>
             </div>
           </div>
 
-          {proc.observacoes && (
+          {proc.internalNote && (
             <div className="mt-3 p-3 rounded-lg text-xs bg-background text-muted-foreground">
-              💬 {proc.observacoes}
+              💬 {proc.internalNote}
             </div>
           )}
         </div>
       </div>
 
       {/* Progresso */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-muted-foreground">
-            Progresso do processo
-          </span>
-          <span className="text-xs font-medium text-white">
-            {Math.round((proc.etapaAtual / proc.totalEtapas) * 100)}%
-          </span>
-        </div>
-
-        <div className="w-full h-2 rounded-full bg-muted">
-          <div
-            className="h-full rounded-full transition-all"
-            style={{
-              width: `${(proc.etapaAtual / proc.totalEtapas) * 100}%`,
-              background: cfg.color,
-            }}
-          />
-        </div>
-      </div>
     </div>
   );
 }

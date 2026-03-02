@@ -13,8 +13,12 @@ export function SearchBar({ value, onChange }: Props) {
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="Buscar por cliente, serviço, veículo ou código..."
+          placeholder="Buscar por cliente, serviço."
           className="w-full pl-9 pr-3 py-2.5 rounded-lg text-sm text-white outline-none bg-background border border-border"
+          style={{
+            background: "hsl(222 47% 11%)",
+            border: "1px solid hsl(215 20% 20%)",
+          }}
         />
       </div>
     </div>

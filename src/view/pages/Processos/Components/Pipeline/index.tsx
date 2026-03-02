@@ -21,19 +21,20 @@ export function Pipeline({ pipeline, active, onChange }: Props) {
 
         return (
           <Button
+            variant={"ghost"}
             key={p.key}
             onClick={() => onChange(active === p.key ? "todos" : p.key)}
             className="rounded-xl p-4 text-left h-20"
             style={{
               border:
-                active === p.key
-                  ? `1px solid ${p.color}`
-                  : "1px solid hsl(215 20% 20%)",
+                active === p.key ? `1px solid ${p.color}` : "1px solid #e9ecef",
             }}
           >
             <div className="flex items-center gap-2 mb-2">
               <Icon className="w-4 h-4" style={{ color: p.color }} />
-              <span className="text-lg font-bold text-white">{p.count}</span>
+              <span className="text-lg font-bold text-accent-foreground">
+                {p.count}
+              </span>
             </div>
             <p className="text-xs text-muted-foreground">{p.label}</p>
           </Button>

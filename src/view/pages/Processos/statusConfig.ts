@@ -13,25 +13,38 @@ export const statusConfig: Record<
   ProcessStatus,
   { label: string; color: string; icon: LucideIcon }
 > = {
-  entrada: { label: "Entrada", color: "hsl(263 70% 58%)", icon: CircleDot },
-  documentacao: {
-    label: "Documentação",
+  NOVO: {
+    label: "Novo",
+    color: "hsl(263 70% 58%)",
+    icon: CircleDot,
+  },
+
+  EM_ANDAMENTO: {
+    label: "Em andamento",
     color: "hsl(189 94% 43%)",
     icon: FileText,
   },
-  detran: {
-    label: "No DETRAN",
+
+  AGUARDANDO_CLIENTE: {
+    label: "Aguardando cliente",
+    color: "hsl(215 20% 50%)",
+    icon: Clock,
+  },
+
+  PROTOCOLADO: {
+    label: "Protocolado",
     color: "hsl(38 92% 50%)",
     icon: ClipboardCheck,
   },
-  aguardando: { label: "Aguardando", color: "hsl(215 20% 50%)", icon: Clock },
-  concluido: {
-    label: "Concluído",
+
+  FINALIZADO: {
+    label: "Finalizado",
     color: "hsl(160 84% 39%)",
     icon: CheckCircle2,
   },
-  atrasado: {
-    label: "Atrasado",
+
+  CANCELADO: {
+    label: "Cancelado",
     color: "hsl(347 77% 50%)",
     icon: AlertTriangle,
   },

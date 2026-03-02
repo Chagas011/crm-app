@@ -1,3 +1,4 @@
+import { Loader } from "@/components/Loader";
 import { Card } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import { Filters } from "./Components/Filters";
@@ -10,6 +11,9 @@ import { useOrcamentos } from "./hooks/useOrcamentos";
 export const Orcamentos = () => {
   const state = useOrcamentos();
 
+  if (state.isLoading) {
+    return <Loader text="Carregando orçamentos" />;
+  }
   return (
     <div className="space-y-5">
       {/* Header */}

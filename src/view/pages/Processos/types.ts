@@ -1,34 +1,39 @@
 import type { LucideIcon } from "lucide-react";
 
-export type ProcessStatus =
-  | "entrada"
-  | "documentacao"
-  | "detran"
-  | "aguardando"
-  | "concluido"
-  | "atrasado";
-
-export interface IProcesso {
-  id: string;
-  cliente: string;
-  telefone: string;
-  servico: string;
-  tipoServico: string;
-  veiculo: string;
-  placa: string;
-  status: ProcessStatus;
-  dataEntrada: string;
-  prazoFinal: string;
-  diasRestantes: number;
-  responsavel: string;
-  documentos: Documento[];
-  observacoes: string;
-  etapaAtual: number;
-  totalEtapas: number;
+interface Document {
+  name: string;
+  value?: string;
 }
-interface Documento {
-  nome: string;
-  recebido: boolean;
+interface Client {
+  id: string;
+  name: string;
+  cpfCnpj: string;
+  tel: string;
+  address: string;
+  email: string;
+}
+
+export type ProcessStatus =
+  | "NOVO"
+  | "EM_ANDAMENTO"
+  | "AGUARDANDO_CLIENTE"
+  | "PROTOCOLADO"
+  | "FINALIZADO"
+  | "CANCELADO";
+export interface IProcess {
+  id: string;
+  client: Client;
+  serviceType: string;
+  description: string;
+  openDate: Date;
+  deadline: Date;
+  status: ProcessStatus;
+  responsibleId: string;
+  responsibleName: string;
+  serviceValue: number;
+  internalNote?: string;
+  documents: Document[];
+  createdAt?: Date;
 }
 
 export interface StatusConfig {

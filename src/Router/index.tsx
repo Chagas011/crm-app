@@ -7,20 +7,23 @@ import { Processos } from "@/view/pages/Processos";
 import { Register } from "@/view/pages/Register";
 import { Tarefas } from "@/view/pages/Tarefas";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthGuard } from "./AuthGuard";
 
 export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<BaseLayout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/processos" element={<Processos />} />
-          <Route path="/orcamentos" element={<Orcamentos />} />
-          <Route path="/clientes" element={<Clientes />} />
-          <Route path="/tarefas" element={<Tarefas />} />
+        <Route element={<AuthGuard isPrivate={true} />}>
+          <Route element={<BaseLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/processos" element={<Processos />} />
+            <Route path="/orcamentos" element={<Orcamentos />} />
+            <Route path="/clientes" element={<Clientes />} />
+            <Route path="/tarefas" element={<Tarefas />} />
+          </Route>
         </Route>
 
-        <Route>
+        <Route element={<AuthGuard isPrivate={false} />}>
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
         </Route>

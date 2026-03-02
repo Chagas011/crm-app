@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
-import { processos } from "../mock";
+import { useGetProcess } from "@/hooks/process/useGetProcess";
+import { useState } from "react";
+
+import { diffInDays } from "@/utils/diffInDays";
 import { statusConfig } from "../statusConfig";
 
 export function useProcessos() {
@@ -11,39 +13,30 @@ export function useProcessos() {
   const toggleShowForm = () => {
     setShowForm((prev) => !prev);
   };
-  const filtered = useMemo(() => {
-    return processos.filter((p) => {
-      const matchSearch =
-        p.cliente.toLowerCase().includes(search.toLowerCase()) ||
-        p.servico.toLowerCase().includes(search.toLowerCase()) ||
-        p.id.toLowerCase().includes(search.toLowerCase()) ||
-        p.veiculo.toLowerCase().includes(search.toLowerCase());
 
-      const matchStatus = filterStatus === "todos" || p.status === filterStatus;
+  const { data, isLoading } = useGetProcess();
+  const process = data?.process ?? [];
+  const filtered = process.filter((p) => {
+    const matchSearch =
+      p.client.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.serviceType.toLowerCase().includes(search.toLowerCase());
+    const matchStatus = filterStatus === "todos" || p.status === filterStatus;
+    return matchSearch && matchStatus;
+  });
 
-      return matchSearch && matchStatus;
-    });
-  }, [search, filterStatus]);
+  const alerts = filtered.filter((alert) => {
+    const daysLeft = diffInDays(
+      new Date(alert.openDate),
+      new Date(alert.deadline),
+    );
+    return daysLeft >= 0 && daysLeft <= 30;
+  });
 
-  const alertas = useMemo(
-    () =>
-      processos.filter(
-        (p) =>
-          p.status === "atrasado" ||
-          (p.diasRestantes <= 3 && p.status !== "concluido"),
-      ),
-    [],
-  );
-
-  const pipeline = useMemo(
-    () =>
-      Object.entries(statusConfig).map(([key, cfg]) => ({
-        key,
-        ...cfg,
-        count: processos.filter((p) => p.status === key).length,
-      })),
-    [],
-  );
+  const pipeline = Object.entries(statusConfig).map(([key, cfg]) => ({
+    key,
+    ...cfg,
+    count: process.filter((p) => p.status === key).length,
+  }));
 
   return {
     search,
@@ -53,10 +46,11 @@ export function useProcessos() {
     expandedId,
     setExpandedId,
     filtered,
-    alertas,
+    alerts,
     pipeline,
     toggleShowForm,
     showForm,
     setShowForm,
+    isLoading,
   };
 }

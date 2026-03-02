@@ -3,22 +3,22 @@ import { Plus } from "lucide-react";
 
 interface Props {
   total: number;
-  alertas: number;
+
   onToggle: () => void;
 }
 
-export function Header({ total, alertas, onToggle }: Props) {
+export function Header({ total, onToggle }: Props) {
   return (
     <div className="flex items-center justify-between flex-wrap gap-3">
       <div>
-        <h3 className="text-white font-semibold text-lg">Processos</h3>
+        <h3 className="text-primary font-semibold text-lg">Processos</h3>
         <p className="text-xs text-muted-foreground mt-0.5">
-          {total} processos · {alertas} com alerta de prazo
+          {total} processos
         </p>
       </div>
 
       <Button
-        variant={"secondary"}
+        variant={"default"}
         className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium  text-white"
         onClick={() => onToggle()}
       >

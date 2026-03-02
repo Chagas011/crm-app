@@ -1,12 +1,11 @@
-export type Priority = "alta" | "média" | "baixa";
-export type Column = "todo" | "progress" | "done";
+export type PriorityStatus = "ALTA" | "MEDIA" | "BAIXA";
+export type ColumStatus = "TODO" | "PROGRESS" | "DONE";
 export interface Task {
-  id: number;
+  id: string;
+  priority: PriorityStatus;
   title: string;
   description: string;
-  priority: Priority;
-  assignee: string;
-  due: string;
-  tag: string;
-  column: Column;
+  responsabilityName: string;
+  colum: ColumStatus;
+  createdAt: string;
 }

@@ -1,23 +1,23 @@
-import { useMemo, useState } from "react";
-import { orcamentos } from "../mock";
+import { useState } from "react";
+
+import { useGetBudgets } from "@/hooks/budget/useGetBudget";
 
 export function useOrcamentos() {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("todos");
   const [showNew, setShowNew] = useState(false);
 
-  const filtered = useMemo(() => {
-    return orcamentos.filter((o) => {
-      const matchSearch =
-        o.client.toLowerCase().includes(search.toLowerCase()) ||
-        o.service.toLowerCase().includes(search.toLowerCase()) ||
-        o.id.toLowerCase().includes(search.toLowerCase());
-      const matchStatus = filterStatus === "todos" || o.status === filterStatus;
-      return matchSearch && matchStatus;
-    });
-  }, [filterStatus, search]);
+  const { data, isLoading } = useGetBudgets();
+  const budgets = data?.budget ?? [];
+  const filtered = budgets.filter((b) => {
+    const matchSearch =
+      b.client.name.toLowerCase().includes(search.toLowerCase()) ||
+      b.service.toLowerCase().includes(search.toLowerCase());
+    const matchStatus = filterStatus === "todos" || b.status === filterStatus;
+    return matchSearch && matchStatus;
+  });
 
-  const total = filtered.reduce((acc, o) => acc + o.value, 0);
+  const total = filtered.reduce((acc, o) => acc + o.serviceValue, 0);
 
   const toggleShowNew = () => {
     setShowNew((prev) => !prev);
@@ -31,5 +31,6 @@ export function useOrcamentos() {
     toggleShowNew,
     total,
     filtered,
+    isLoading,
   };
 }

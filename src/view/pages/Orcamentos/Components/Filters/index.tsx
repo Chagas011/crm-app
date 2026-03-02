@@ -1,4 +1,5 @@
-import { statusConfig } from "../../statusConfig";
+import { Button } from "@/components/ui/button";
+import { statusConfigBudget } from "../../statusConfig";
 
 interface IFiltersProps {
   active: string;
@@ -8,23 +9,27 @@ interface IFiltersProps {
 export function Filters({ active, onChange }: IFiltersProps) {
   return (
     <div className="flex gap-2 flex-wrap">
-      {["todos", "aprovado", "analise", "rascunho", "rejeitado"].map((s) => (
-        <button
+      {["todos", "APROVADO", "EM_ANALISE", "REJEITADO"].map((s) => (
+        <Button
+          variant={"ghost"}
           key={s}
           onClick={() => onChange((active = s))}
-          className="px-3 py-2 rounded-lg text-xs font-medium capitalize transition-all"
+          className="px-3 py-2 rounded-lg text-xs font-medium capitalize transition-all h-11"
           style={
             active === s
-              ? { background: "hsl(263 70% 58%)", color: "white" }
+              ? {
+                  color: "black",
+                  border: "1px solid #10161d",
+                }
               : {
-                  background: "hsl(222 47% 11%)",
+                  background: "",
                   color: "hsl(215 20% 60%)",
-                  border: "1px solid hsl(215 20% 20%)",
+                  border: "1px solid #e9ecef",
                 }
           }
         >
-          {s === "todos" ? "Todos" : statusConfig[s]?.label}
-        </button>
+          {s === "todos" ? "Todos" : statusConfigBudget[s]?.label}
+        </Button>
       ))}
     </div>
   );

@@ -1,31 +1,32 @@
-import { useMemo, useState } from "react";
-import { clientes } from "../mock";
+import { useGetClients } from "@/hooks/clients/useGetClients";
+import { useState } from "react";
 
 export function useClientes() {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("todos");
   const [showNew, setShowNew] = useState(false);
-
-  const filtered = useMemo(() => {
-    return clientes.filter((c) => {
-      const matchSearch =
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        c.contact.toLowerCase().includes(search.toLowerCase());
-      const matchStatus = filterStatus === "todos" || c.status === filterStatus;
-      return matchSearch && matchStatus;
-    });
-  }, [search, filterStatus]);
   const toggleShowNew = () => {
     setShowNew((prev) => !prev);
   };
+  const { data, isLoading } = useGetClients();
+  const clients = data?.clients ?? [];
+  const filtered = clients.filter((clients) => {
+    const matchSearch =
+      clients.name.toLowerCase().includes(search.toLowerCase()) ||
+      clients.tel.toLowerCase().includes(search.toLowerCase());
+
+    return matchSearch;
+  });
+
   return {
     search,
     setSearch,
     filterStatus,
     setFilterStatus,
     showNew,
-    setShowNew,
     filtered,
+    setShowNew,
     toggleShowNew,
+    isLoading,
   };
 }

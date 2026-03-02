@@ -1,9 +1,9 @@
-import type { IProcesso } from "../../types";
+import type { IProcess } from "../../types";
 import { EmptyState } from "../EmptyState";
 import { ProcessItem } from "../ProcessItem";
 
 interface Props {
-  processos: IProcesso[];
+  processos: IProcess[];
   expandedId: string | null;
   onToggle: (id: string | null) => void;
 }
