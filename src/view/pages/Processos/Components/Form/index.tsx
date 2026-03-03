@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useGetClients } from "@/hooks/clients/useGetClients";
 import { useCreateProcess } from "@/hooks/process/useCreateProcess";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -291,9 +292,9 @@ export function FormProcess({ onToggle }: IFormProps) {
                   Observações internas
                 </Label>
                 <FormControl>
-                  <Input
+                  <Textarea
                     {...field}
-                    placeholder="Observações do processo"
+                    placeholder="Observações internas"
                     className="h-11 text-primary placeholder:text-primary/35 bg-gray-2"
                   />
                 </FormControl>

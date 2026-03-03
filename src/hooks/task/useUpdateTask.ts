@@ -29,7 +29,7 @@ export function useUpdateTask() {
       return { previousTasks };
     },
 
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context?.previousTasks) {
         queryClient.setQueryData(["tasks"], context.previousTasks);
       }

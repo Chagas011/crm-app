@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useGetClients } from "@/hooks/clients/useGetClients";
 import { useUpdateProcess } from "@/hooks/process/useUpdateProcess";
 import { processSchema } from "../Form/schema";
@@ -288,9 +289,9 @@ export function ModalUpdateProcess({
                             Numero do documento
                           </Label>
                           <FormControl>
-                            <Input
+                            <Textarea
                               {...field}
-                              placeholder="567.524.685-65"
+                              placeholder="Observações internas"
                               className="h-11 text-primary placeholder:text-primary/35 bg-gray-2"
                             />
                           </FormControl>

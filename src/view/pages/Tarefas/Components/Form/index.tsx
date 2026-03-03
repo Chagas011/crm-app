@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Textarea } from "@/components/ui/textarea";
 import { useCreateTask } from "@/hooks/task/useCreateTask";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -123,8 +124,7 @@ export function FormTask({ onToggle }: IFormOrcamentoProps) {
                 <FormItem>
                   <Label className="text-accent-foreground">Descrição</Label>
                   <FormControl>
-                    <Input
-                      type="text"
+                    <Textarea
                       {...field}
                       placeholder="informe a descrição da tarefa"
                       className="h-11 text-primary placeholder:text-primary/35 bg-gray-2"

@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useUpdateBudget } from "@/hooks/budget/useUpdateBudget";
 import { createBudgetSchema } from "../Form/schema";
 
@@ -89,7 +90,7 @@ export function ModalUpdateBudget({
 
         <Form {...form}>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-5">
               {/* CLIENTE */}
               <FormField
                 control={form.control}
@@ -125,7 +126,7 @@ export function ModalUpdateBudget({
                   <FormItem>
                     <Label className="text-accent-foreground">Serviço</Label>
                     <FormControl>
-                      <Input
+                      <Textarea
                         {...field}
                         placeholder="Descrição do serviço"
                         className="h-11 text-primary placeholder:text-primary/35 bg-gray-2"

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, Edit, Trash } from "lucide-react";
+import { Calendar, Edit } from "lucide-react";
 import { priorityConfig } from "../../constants";
 
 import { useUpdateTask } from "@/hooks/task/useUpdateTask";
@@ -8,6 +8,7 @@ import { useState } from "react";
 import type { ColumStatus, Task } from "../../types";
 import { getAvatarColor } from "../../utils";
 import { getNextColumn, getPreviousColumn } from "../../utils/moveTask";
+import { DeleteTaskModal } from "../DeleteTaskModal";
 import { ModalUpdateTask } from "../ModalUpdateTask";
 
 interface Props {
@@ -62,13 +63,7 @@ export const TaskCard = ({ task, column }: Props) => {
             <Edit />
           </Button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-primary hover:bg-gray-3"
-          >
-            <Trash />
-          </Button>
+          <DeleteTaskModal id={task.id} />
         </div>
       </div>
 
@@ -93,7 +88,7 @@ export const TaskCard = ({ task, column }: Props) => {
         {task.createdAt !== "—" && (
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <Calendar className="w-3 h-3" />
-            {task.createdAt}
+            {new Date(task.createdAt).toLocaleDateString("pt-BR")}
           </div>
         )}
       </div>

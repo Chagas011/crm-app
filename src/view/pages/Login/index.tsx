@@ -103,13 +103,6 @@ export function Login() {
                       <Label className="text-sm font-medium text-accent-foreground">
                         Senha
                       </Label>
-                      <Button
-                        type="button"
-                        className="text-xs font-medium hover:underline"
-                        style={{ color: "hsl(263 70% 68%)" }}
-                      >
-                        Esqueceu a senha?
-                      </Button>
                     </div>
 
                     <FormControl>

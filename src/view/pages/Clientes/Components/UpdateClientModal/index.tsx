@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { clientSchema } from "../FormClient/schema";
 
 interface ModalUpdateClientProps {
@@ -72,6 +73,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    Nome
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="Nome"
@@ -89,6 +93,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    Email
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="E-mail"
@@ -106,6 +113,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="tel"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    Telefone
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="Telefone"
@@ -123,6 +133,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="cpfCnpj"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    CPF/CNPJ
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="CPF / CNPJ"
@@ -140,6 +153,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="rgIE"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    RG / IE
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="RG / IE"
@@ -157,6 +173,9 @@ export function ModalUpdateClient({ client, onClose }: ModalUpdateClientProps) {
               name="address"
               render={({ field }) => (
                 <FormItem>
+                  <Label className="text-sm font-medium text-accent-foreground">
+                    Endereço
+                  </Label>
                   <FormControl>
                     <Input
                       placeholder="Endereço"

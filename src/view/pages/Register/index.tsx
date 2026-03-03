@@ -134,6 +134,15 @@ export function Register() {
                         </Button>
                       </div>
                     </FormControl>
+                    <div className="mt-5">
+                      <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
+                        <li>Mínimo de 8 caracteres</li>
+                        <li>Pelo menos uma letra maiúscula (A-Z)</li>
+                        <li>Pelo menos uma letra minúscula (a-z)</li>
+                        <li>Pelo menos um número (0-9)</li>
+                        <li>Pelo menos um caractere especial (!@#$%...)</li>
+                      </ul>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -146,7 +155,7 @@ export function Register() {
                 className="w-full h-11 text-sm font-semibold text-white rounded-xl"
                 disabled={isPending}
               >
-                {isPending ? "Entrando..." : "Entrar"}
+                {isPending ? "Cadastrando..." : "Cadastrar"}
               </Button>
             </form>
           </Form>

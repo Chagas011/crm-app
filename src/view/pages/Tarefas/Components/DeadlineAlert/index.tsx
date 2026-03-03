@@ -6,7 +6,9 @@ interface Props {
 }
 
 export const DeadlineAlert = ({ tasks }: Props) => {
-  const overdue = tasks.filter((t) => t.due !== "—" && t.column !== "done");
+  const overdue = tasks.filter(
+    (t) => t.createdAt !== "—" && t.colum !== "DONE",
+  );
 
   if (overdue.length === 0) return null;
 

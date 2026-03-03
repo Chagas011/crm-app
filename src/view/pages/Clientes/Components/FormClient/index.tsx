@@ -52,7 +52,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     Nome
                   </Label>
                   <FormControl>
@@ -73,7 +73,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     E-mail
                   </Label>
                   <FormControl>
@@ -94,7 +94,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="cpfCnpj"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     CPF / CNPJ
                   </Label>
                   <FormControl>
@@ -116,7 +116,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="rgIE"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     RG / IE
                   </Label>
                   <FormControl>
@@ -137,7 +137,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="tel"
               render={({ field }) => (
                 <FormItem>
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     Telefone
                   </Label>
                   <FormControl>
@@ -158,7 +158,7 @@ export function FormClient({ onToggle }: IFormProps) {
               name="address"
               render={({ field }) => (
                 <FormItem className="">
-                  <Label className="text-sm font-medium text-white/70">
+                  <Label className="text-sm font-medium text-accent-foreground">
                     Endereço
                   </Label>
                   <FormControl>

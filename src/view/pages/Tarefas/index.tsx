@@ -3,6 +3,7 @@ import { FormTask } from "./Components/Form";
 import { Header } from "./Components/Header";
 import { KanbanColumn } from "./Components/KanbanColumn";
 import { SearchBar } from "./Components/SearchBar";
+import { SelectResponsible } from "./Components/SelectResponsible";
 import { columns } from "./constants";
 import { useTarefas } from "./hooks/useTarefas";
 
@@ -15,9 +16,17 @@ export const Tarefas = () => {
     <div className="space-y-5 ">
       <Header tarefas={state.filtered.length} onToggle={state.toggleShowForm} />
 
-      <SearchBar onChange={state.setSearch} value={state.search} />
+      <div className="flex gap-5">
+        <SearchBar onChange={state.setSearch} value={state.search} />
+        <SelectResponsible
+          responsible={state.responsible}
+          responsibles={state.responsibles}
+          setResponsible={state.setResponsible}
+        />
+      </div>
 
       {state.showForm && <FormTask onToggle={() => state.setShowForm(false)} />}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
         {columns.map((col) => (
           <KanbanColumn

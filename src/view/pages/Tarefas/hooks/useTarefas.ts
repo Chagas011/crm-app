@@ -4,12 +4,27 @@ import { useState } from "react";
 export function useTarefas() {
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
-
+  const [responsible, setResponsible] = useState<string>("all")
   const { data, isLoading } = useGetTask();
   const tasks = data?.task ?? [];
-  const filtered = tasks.filter((t) => {
-    const matchSearch = t.title.toLowerCase().includes(search.toLowerCase());
-    return matchSearch;
+ 
+  const responsibles = Array.from(
+  new Set(tasks.map((task) => task.responsabilityName))
+);
+
+const filtered = tasks
+  .filter((t) => {
+    const matchSearch = t.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchResponsible =
+      responsible === "all" || t.responsabilityName === responsible;
+
+    return matchSearch && matchResponsible;
+  })
+  .sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
   const toggleShowForm = () => {
@@ -23,5 +38,8 @@ export function useTarefas() {
     toggleShowForm,
     setShowForm,
     isLoading,
+    responsibles,
+    setResponsible,
+    responsible
   };
 }

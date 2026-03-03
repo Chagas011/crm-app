@@ -106,6 +106,8 @@ export function ProcessExpanded({ proc }: Props) {
                 >
                   {doc.name}
                 </span>
+
+                <span className="text-muted-foreground">- {doc.value}</span>
               </div>
             ))}
           </div>
@@ -141,14 +143,14 @@ export function ProcessExpanded({ proc }: Props) {
           </div>
 
           <div className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex justify-between">
+            <div className="flex justify-start gap-9">
               <span>Entrada:</span>
               <span className="text-accent-foreground">
                 {new Date(proc.openDate).toLocaleDateString("pt-BR")}
               </span>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-start gap-12">
               <span>Prazo:</span>
               <span
                 className={
@@ -161,7 +163,7 @@ export function ProcessExpanded({ proc }: Props) {
               </span>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-start gap-2">
               <span>Responsável:</span>
               <span className="text-accent-foreground">
                 {proc.responsibleName}
